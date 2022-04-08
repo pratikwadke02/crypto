@@ -6,6 +6,7 @@ class DataModel{
   String name;
   String rank;
   String symbol;
+  String logo_url;
 
   DataModel({
     required this.name,
@@ -13,6 +14,7 @@ class DataModel{
     required this.price,
     required this.rank,
     required this.symbol,
+    required this.logo_url,
   });
 
   factory DataModel.fromJSON(Map<String, dynamic> json){
@@ -22,6 +24,7 @@ class DataModel{
       price: json['price'],
       rank: json['rank'],
       symbol: json['symbol'],
+      logo_url: json['logo_url'],
     );
   }
 

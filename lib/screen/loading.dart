@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:crypto/services/crypto_data.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,7 +16,7 @@ class _LoadingState extends State<Loading> {
 
  
   Future<void> getCurrency() async {
-    var url = Uri.parse('https://api.nomics.com/v1/currencies/ticker?key=cd8af16d3cee486e0e1644466633be92eac4bedd&ids=DOGE,BTC,ETH,XRP&interval=1d,30d&convert=INR');
+    var url = await Uri.parse('https://api.nomics.com/v1/currencies/ticker?key=cd8af16d3cee486e0e1644466633be92eac4bedd&ids=DOGE,BTC,ETH,XRP&interval=1d,30d&convert=INR');
     final response = await get(url);
     print(response.body);
     if (response.statusCode == 200) {
@@ -49,7 +47,7 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[900],
+      backgroundColor: Colors.grey[900],
       body: Center(
         child: SpinKitWanderingCubes(
           color: Colors.white,
