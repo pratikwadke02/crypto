@@ -1,4 +1,9 @@
+import 'package:crypto/services/DataModel.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -8,14 +13,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> cryptoList = [
-    'BTC',
-    'ETH',
-    'LTC',
-  ]; 
+  // List<String> cryptoList = [
+  //   'BTC',
+  //   'ETH',
+  //   'LTC',
+  // ]; 
+  double input = 0.0;
+  List<DataModel> cryptoList = [];
+
+
+  
 
   @override
   Widget build(BuildContext context) {
+    cryptoList = ModalRoute.of(context)!.settings.arguments as List<DataModel>;
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Crypto App'),
@@ -41,12 +55,19 @@ class _HomeState extends State<Home> {
               maxLines: 1,
               keyboardType: TextInputType.number,
               onChanged: (value) {
-                print(value);
+                try {
+                  setState(() {
+                    input = double.parse(value);
+                  });
+                } catch (e) {
+                  input = 0.0;
+                }
               },
             ),
             SizedBox(height: 20.0),
             Expanded(
               child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
@@ -59,10 +80,10 @@ class _HomeState extends State<Home> {
                       child: ListTile(
                         leading: CircleAvatar(
                           backgroundColor: Colors.white,
-                          child: Text(cryptoList[index][0]),
+                          child: Text(cryptoList[index].symbol[0]+cryptoList[index].symbol[1]+cryptoList[index].symbol[2]),
                         ),
                         title: Text(
-                          cryptoList[index],
+                          '${input / double.parse(cryptoList[index].price)}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20.0,
@@ -83,6 +104,6 @@ class _HomeState extends State<Home> {
           )
       )
       ),
-      );
+    );
   }
 }
